@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"
 import pic1 from "./assets/c-d-x-PDX_a_82obo-unsplash.jpg";
 import pic2 from "./assets/domino-studio-164_6wVEHfI-unsplash.jpg";
 import pic3 from "./assets/eniko-kis-KsLPTsYaqIQ-unsplash.jpg";
@@ -13,8 +14,8 @@ export function Home() {
             <h1>E-Commerce Store</h1>
         </div>
         <div className="flex gap-4">
-            <button className="bg-sky-500 text-white px-5 py-2 rounded-md mt-2 hover:bg-sky-900">Log in</button>
-            <button className="bg-sky-500 text-white px-5 py-2 rounded-md mt-2 hover:bg-sky-900">sign up</button>
+            <Link to={"/log-in"} className="bg-sky-500 text-white px-5 py-2 rounded-md mt-2 hover:bg-sky-900">Log in</Link>
+            <Link to={"/sign-up"} className="bg-sky-500 text-white px-5 py-2 rounded-md mt-2 hover:bg-sky-900">sign up</Link>
         </div>
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
