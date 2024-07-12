@@ -19,6 +19,8 @@ app.post("/sign-up", async (req, res) => {
         const newCustumer = new custumer({username: username, password: password, email: email})
         console.log(newCustumer)
         const saveCustumer = await newCustumer.save()
+        const token = newCustumer.generateAuthToken()
+        res.status(201).send({ token })
     } catch (error) {
         console.log(error)       
     }
