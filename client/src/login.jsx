@@ -8,7 +8,7 @@ export function Login() {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            const res = await fetch("http://localhost:3000/log-in", { // Use /log-in endpoint
+            const res = await fetch("http://localhost:3000/log-in", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -18,8 +18,10 @@ export function Login() {
                     password
                 })
             });
-
+    
             if (res.ok) {
+                const data = await res.json();
+                localStorage.setItem("token", data.token);  // Save the token
                 console.log("Log in is ok");
                 setError("");
             } else {
@@ -32,7 +34,7 @@ export function Login() {
             setError("An error occurred");
         }
     }
-
+        
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
