@@ -8,8 +8,7 @@ const handleLogout = (setUsername) => {
   setUsername(""); // Clear the username
 };
 
-export function Home({ username, setUsername }) {
-  const [cart, setCart] = useState([]);
+export function Home({ username, setUsername, cart, setCart, quantity, setQuantity }) {
   const nav = useNavigate();
 
   const products = [
@@ -20,13 +19,23 @@ export function Home({ username, setUsername }) {
 
   const addToCart = (product) => {
     if (username) {
-      setCart([...cart, product]);
-      console.log(cart);
+      setCart((prevCart) => {
+        const existingProduct = prevCart.find(item => item.id === product.id);
+        const updatedCart = existingProduct
+          ? prevCart.map(item =>
+              item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+            )
+          : [...prevCart, { ...product, quantity: 1 }];
+  
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return updatedCart;
+      });
+      setQuantity(quantity + 1);
     } else {
       nav("/sign-up");
     }
   };
-
+  
   return (
     <>
       <div className="flex justify-between bg-slate-800 text-white p-4 mb-4 items-center">
@@ -36,7 +45,8 @@ export function Home({ username, setUsername }) {
         <div className="flex items-center gap-4">
           {username ? (
             <>
-              <Link to="/profile" className="text-white">Welcome, {username}</Link>
+              <Link to="/profile" className="text-white hover:underline">Welcome, {username}</Link>
+              <Link to="/cart" className="text-white hover:underline">There are {quantity} items in the cart</Link>
               <Link 
                 to="/" 
                 onClick={() => handleLogout(setUsername)} 
@@ -66,7 +76,7 @@ export function Home({ username, setUsername }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {products.map((product) => (
           <div key={product.id} className="border border-black p-2 flex flex-col items-center">
-            <img src={product.pic} alt={`Image ${product.id}`} className="w-full h-auto max-w-full max-h-full"/>
+            <img src={product.pic} alt={`Image ${product.id}`} className="w-full h-auto max-w-full max-h-full" />
             <h1>${product.price}</h1>
             <button className="bg-sky-500 text-white px-16 py-2 rounded-md mt-2 hover:bg-sky-900" onClick={() => addToCart(product)}>Add to cart</button>
           </div>

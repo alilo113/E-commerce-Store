@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export function Login({ setUsername }) {
@@ -6,6 +6,13 @@ export function Login({ setUsername }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate(); // Initialize useNavigate
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,6 +28,7 @@ export function Login({ setUsername }) {
       if (res.ok) {
         const data = await res.json();
         setUsername(data.username); // Set username on successful login
+        localStorage.setItem("username", data.username)
         navigate("/"); // Redirect to home using useNavigate
       } else {
         const errorData = await res.json();
