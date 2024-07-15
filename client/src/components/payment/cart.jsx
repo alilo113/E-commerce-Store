@@ -8,23 +8,24 @@ export function Cart({ cart, setCart }) {
         setCart([]);
     }
 
-    function handleCheckout() {
-        const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-        
-        // Assuming you need to send this to the backend
-        const orderDetails = {
-            products: cart.map(item => ({ product: item.id, quantity: item.quantity })),
-            totalPrice,
+    const handleCheckout = () => {
+        const order = {
+          _id: crypto.randomUUID(),
+          totalPrice: totalPrice,
+          products: cart.map(item => ({
+            product: {
+              _id: item.id,
+              imageUrl: item.pic,
+              price: item.price
+            },
+            quantity: item.quantity
+          }))
         };
-
-        // Simulating an API call (replace with actual API call)
-        // For example: axios.post("/api/orders", orderDetails).then(response => ...)
-        console.log("Order Details:", orderDetails);
-
-        // Navigate to order confirmation with order details
-        nav("/order-confirmation", { state: { order: orderDetails } });
-    }
-
+      
+        // Navigate to OrderConfirmation with the order data
+        nav("/order-confirmation", { state: { order } });
+      };
+      
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (

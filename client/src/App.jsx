@@ -16,6 +16,7 @@ function App() {
   const [quantity, setQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice
 
+  console.log(cart)
   useEffect(() => {
     setQuantity(cart.reduce((total, item) => total + item.quantity, 0));
     setTotalPrice(cart.reduce((total, item) => total + item.price * item.quantity, 0)); // Calculate total price

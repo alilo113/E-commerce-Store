@@ -5,7 +5,7 @@ export function OrderConfirmation() {
   const location = useLocation();
   const { order } = location.state || {};
 
-  if (!order || !order.totalPrice) {
+  if (!order) {
     return <p>Error: Order details are not available.</p>;
   }
 
@@ -19,7 +19,7 @@ export function OrderConfirmation() {
         <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
         <ul>
           {order.products.map((item) => (
-            <li key={`${item.product._id}-${item.quantity}`} className="border p-2 flex justify-between items-center">
+            <li key={item.product._id} className="border p-2 flex justify-between items-center">
               <img src={item.product.imageUrl} alt={`Image ${item.product._id}`} className="w-16 h-16" />
               <div>
                 <h2 className="font-semibold">${item.product.price}</h2>
