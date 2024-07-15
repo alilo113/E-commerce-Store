@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import pic1 from "./assets/c-d-x-PDX_a_82obo-unsplash.jpg";
-import pic2 from "./assets/domino-studio-164_6wVEHfI-unsplash.jpg";
-import pic3 from "./assets/eniko-kis-KsLPTsYaqIQ-unsplash.jpg";
+import pic1 from "../../assets/c-d-x-PDX_a_82obo-unsplash.jpg";
+import pic2 from "../../assets/domino-studio-164_6wVEHfI-unsplash.jpg";
+import pic3 from "../../assets/eniko-kis-KsLPTsYaqIQ-unsplash.jpg";
 
 const handleLogout = (setUsername) => {
   setUsername(""); // Clear the username

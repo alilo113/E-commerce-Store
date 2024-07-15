@@ -16,6 +16,10 @@ const customerSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  role: {
+    type: String,
+    default: "user"
+  }
 });
 
 // Hash the password before saving the customer
@@ -26,6 +30,15 @@ customerSchema.pre("save", async function (next) {
   }
   next();
 });
+
+customerSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, role: this.role },
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' }
+  );  
+  return token;
+};  
 
 // Method to compare password
 customerSchema.methods.comparePassword = async function (password) {

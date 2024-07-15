@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "./home";
-import { Login } from "./login";
-import { Signup } from "./signup";
-import { Profile } from "./profile";
-import { Cart } from "./cart";
-import { Checkout } from "./checkout";
-import { OrderConfirmation } from "./OrderConfirmation";
+import { Home } from "./components/Home/homepage";
+import { Login } from "./components/registration/login";
+import { Signup } from "./components/registration/signup";
+import { Profile } from "./components/profile/profile";
+import { Cart } from "./components/payment/cart";
+import { Checkout } from "./components/payment/checkout";
+import { OrderConfirmation } from "./components/payment/OrderConfirmation";
 
 function App() {
   const [username, setUsername] = useState("");

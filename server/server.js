@@ -36,6 +36,18 @@ app.post("/login", async (req, res) => {
     }
 });  
 
+app.post("/api/orders", async (req, res) => {
+  try {
+      const { products, totalPrice } = req.body;
+      // Logic to save the order to the database
+      // For example, create an Order model and save it
+      res.status(201).send({ message: "Order created successfully." });
+  } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send({ message: "Internal server error." });
+  }
+});
+
 app.listen(port, () => console.log(`This app listens on port ${port}`)); // Fixed the log message
 
 
