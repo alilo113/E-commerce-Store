@@ -5,8 +5,8 @@ import { Login } from "./login";
 import { Signup } from "./signup";
 import { Profile } from "./profile";
 import { Cart } from "./cart";
-
-// ... other imports
+import { Checkout } from "./checkout";
+import { OrderConfirmation } from "./OrderConfirmation";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -15,9 +15,11 @@ function App() {
     return savedCart ? JSON.parse(savedCart) : [];
   });
   const [quantity, setQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0); // Initialize totalPrice
 
   useEffect(() => {
     setQuantity(cart.reduce((total, item) => total + item.quantity, 0));
+    setTotalPrice(cart.reduce((total, item) => total + item.price * item.quantity, 0)); // Calculate total price
     localStorage.setItem("cart", JSON.stringify(cart));
 
     const storedUsername = localStorage.getItem("username");
@@ -29,14 +31,16 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home username={username} setUsername={setUsername} cart={cart} setCart={setCart} quantity={quantity} setQuantity={setQuantity} />} />
+        <Route path="/" element={<Home username={username} setUsername={setUsername} cart={cart} setCart={setCart} quantity={quantity}   setQuantity={setQuantity} />} />
         <Route path="/log-in" element={<Login setUsername={setUsername} />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/profile" element={<Profile username={username} />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+        <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} totalPrice={totalPrice} />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
       </Routes>
     </Router>
   );
 }
 
-export default App;;
+export default App;
