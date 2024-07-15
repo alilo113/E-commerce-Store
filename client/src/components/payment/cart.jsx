@@ -1,9 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 export function Cart({ cart, setCart }) {
+    const nav = useNavigate();
 
     function clearCart() {
         setCart([]);
+    }
+
+    function handleCheckout() {
+        const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        
+        // Assuming you need to send this to the backend
+        const orderDetails = {
+            products: cart.map(item => ({ product: item.id, quantity: item.quantity })),
+            totalPrice,
+        };
+
+        // Simulating an API call (replace with actual API call)
+        // For example: axios.post("/api/orders", orderDetails).then(response => ...)
+        console.log("Order Details:", orderDetails);
+
+        // Navigate to order confirmation with order details
+        nav("/order-confirmation", { state: { order: orderDetails } });
     }
 
     const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -13,13 +32,13 @@ export function Cart({ cart, setCart }) {
             <div className="flex justify-between items-center">
                 <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
                 <div>
-                <Link to="/" className="hover:underline">Back to home page</Link>
-                <button 
-                    onClick={clearCart} 
-                    className="mx-5 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition"
-                >
-                    Clear cart
-                </button>
+                    <Link to="/" className="hover:underline">Back to home page</Link>
+                    <button 
+                        onClick={clearCart} 
+                        className="mx-5 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition"
+                    >
+                        Clear cart
+                    </button>
                 </div>
             </div>
             {cart.length === 0 ? (
@@ -29,7 +48,7 @@ export function Cart({ cart, setCart }) {
             ) : (
                 <div>
                     <ul className="space-y-4">
-                        {cart.map((item) => (
+                        {cart.map((item, index) => (
                             <li key={item.id} className="border p-4 flex justify-between items-center">
                                 <img src={item.pic} alt={`Image ${item.id}`} className="w-16 h-16" />
                                 <div>
@@ -44,6 +63,12 @@ export function Cart({ cart, setCart }) {
                     </div>
                 </div>
             )}
+            <button
+                onClick={handleCheckout}
+                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 transition"
+            >
+                Place Order
+            </button>
         </div>
     );
 }

@@ -5,7 +5,6 @@ import { Login } from "./components/registration/login";
 import { Signup } from "./components/registration/signup";
 import { Profile } from "./components/profile/profile";
 import { Cart } from "./components/payment/cart";
-import { Checkout } from "./components/payment/checkout";
 import { OrderConfirmation } from "./components/payment/OrderConfirmation";
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/profile" element={<Profile username={username} />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
-        <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} totalPrice={totalPrice} />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
       </Routes>
     </Router>
